@@ -1,24 +1,17 @@
 # flake8: noqa
 import os
-import environ
-
 from pathlib import Path
-
-
-env = environ.Env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(os.path.join(BASE_DIR.parent, '.env'))
-
-SECRET_KEY = env(
-    'SECRET_KEY',
-    default='insecure_key_xq24vp(!g2b0kqo2l)d)hcjpj=4!h09l%_o8%rzxxv%-8j*&yf'
+SECRET_KEY = os.getenv(
+    'DJANGO_SECRET_KEY',
+    'insecure_key_xq24vp(!g2b0kqo2l)d)hcjpj=4!h09l%_o8%rzxxv%-8j*&yf'
 )
 
-DEBUG = env('DEBUG', default='False').lower() in ('true', '1', 't')
+DEBUG = os.getenv('DEBUG','False').lower() in ('true', '1', 't')
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['127.0.0.1', 'localhost'])
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1 localhost').split(' ')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -67,11 +60,11 @@ WSGI_APPLICATION = 'kittygram_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('POSTGRES_DB', default='django'),
-        'USER': env('POSTGRES_USER', default='django'),
-        'PASSWORD': env('POSTGRES_PASSWORD', default=''),
-        'HOST': env('DB_HOST', default=''),
-        'PORT': env('DB_PORT', default=5432)
+        'NAME': os.getenv('POSTGRES_DB', 'django'),
+        'USER': os.getenv('POSTGRES_USER', 'django'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+        'HOST': os.getenv('DB_HOST', ''),
+        'PORT': os.getenv('DB_PORT', 5432)
     }
 }
 
