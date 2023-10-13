@@ -1,4 +1,5 @@
-"""Django's command-line utility for administrative tasks."""
+#!/usr/bin/env python
+# flake8: noqa
 import os
 import sys
 
